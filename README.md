@@ -39,9 +39,6 @@ https://umergulkaleem-excel-to-csv-app.streamlit.app/ this is the hosted link
 - Pandas
 - openpyxl 
 
-## Deployment
-
-The app is deployed on Streamlit Cloud and can be accessed at: [Hosted Link](https://umergulkaleem-excel-to-csv-app.streamlit.app/)
 
 ## License
 
