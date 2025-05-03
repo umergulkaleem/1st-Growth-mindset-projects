@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import os
 from io import BytesIO
-from docx2pdf import convert
-from pdf2docx import Converter
+# from docx2pdf import convert
+# from pdf2docx import Converter
 
 
 # set up the app
@@ -16,55 +16,55 @@ st.write("Transform your files between CSV and excel with data cleaning and data
 uploaded_files = st.file_uploader("Upload your files (CSV or Excel):",type=["csv","xlsx"],accept_multiple_files=True)
 
 
-st.title("DOCX ↔ PDF Converter")
+# st.title("DOCX ↔ PDF Converter")
 
-uploaded_files1 = st.file_uploader("Upload your files (Word or PDF):", type=["docx", "pdf"], accept_multiple_files=True)
+# uploaded_files1 = st.file_uploader("Upload your files (Word or PDF):", type=["docx", "pdf"], accept_multiple_files=True)
 
-if uploaded_files1:
-    for file in uploaded_files1:
-        file_ext = file.name.split(".")[-1].lower()  # Get file extension
+# if uploaded_files1:
+#     for file in uploaded_files1:
+#         file_ext = file.name.split(".")[-1].lower()  # Get file extension
         
-        # Read file into a buffer
-        file_buffer = BytesIO(file.read())
-        converted_buffer = BytesIO()  # Buffer for converted file
-        converted_filename = ""
+#         # Read file into a buffer
+#         file_buffer = BytesIO(file.read())
+#         converted_buffer = BytesIO()  # Buffer for converted file
+#         converted_filename = ""
 
-        if file_ext == "docx":
-            # Convert DOCX to PDF (Using an in-memory trick)
-            with open("temp.docx", "wb") as temp_docx:
-                temp_docx.write(file_buffer.getvalue())
+#         if file_ext == "docx":
+#             # Convert DOCX to PDF (Using an in-memory trick)
+#             with open("temp.docx", "wb") as temp_docx:
+#                 temp_docx.write(file_buffer.getvalue())
 
-            convert("temp.docx", "temp.pdf")
+#             convert("temp.docx", "temp.pdf")
 
-            with open("temp.pdf", "rb") as pdf_file:
-                converted_buffer.write(pdf_file.read())
+#             with open("temp.pdf", "rb") as pdf_file:
+#                 converted_buffer.write(pdf_file.read())
 
-            converted_filename = file.name.replace(".docx", ".pdf")
+#             converted_filename = file.name.replace(".docx", ".pdf")
 
-        elif file_ext == "pdf":
-            # Convert PDF to DOCX (Using pdf2docx)
-            with open("temp.pdf", "wb") as temp_pdf:
-                temp_pdf.write(file_buffer.getvalue())
+#         elif file_ext == "pdf":
+#             # Convert PDF to DOCX (Using pdf2docx)
+#             with open("temp.pdf", "wb") as temp_pdf:
+#                 temp_pdf.write(file_buffer.getvalue())
 
-            cv = Converter("temp.pdf")
-            cv.convert("temp.docx")
-            cv.close()
+#             cv = Converter("temp.pdf")
+#             cv.convert("temp.docx")
+#             cv.close()
 
-            with open("temp.docx", "rb") as docx_file:
-                converted_buffer.write(docx_file.read())
+#             with open("temp.docx", "rb") as docx_file:
+#                 converted_buffer.write(docx_file.read())
 
-            converted_filename = file.name.replace(".pdf", ".docx")
+#             converted_filename = file.name.replace(".pdf", ".docx")
 
-        # Reset buffer position before download
-        converted_buffer.seek(0)
+#         # Reset buffer position before download
+#         converted_buffer.seek(0)
 
-        # Provide download button
-        st.download_button(
-            label=f"🔽 Download {converted_filename}",
-            data=converted_buffer,
-            file_name=converted_filename,
-            mime="application/pdf" if file_ext == "docx" else "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        )
+#         # Provide download button
+#         st.download_button(
+#             label=f"🔽 Download {converted_filename}",
+#             data=converted_buffer,
+#             file_name=converted_filename,
+#             mime="application/pdf" if file_ext == "docx" else "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+#         )
 
 if uploaded_files:
     for file in uploaded_files:  #loop after the file is uploaded
